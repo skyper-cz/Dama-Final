@@ -1,7 +1,6 @@
 package com.company;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 import static java.util.Objects.isNull;
@@ -14,8 +13,8 @@ public class Main {
     public static boolean isSelected = false;
     public static int xSelected = -1;
     public static int ySelected = -1;
-    public static JLabel blackWon = new JLabel(new ImageIcon("resources/checkers/Victory screens/black wins.png"));
-    public static JLabel whiteWon = new JLabel(new ImageIcon("resources/checkers/Victory screens/white wins.png"));
+    public static JLabel blackWon = new JLabel(new ImageIcon("resources/black_wins.png"));
+    public static JLabel whiteWon = new JLabel(new ImageIcon("resources/white_wins.png"));
 
     public static void main(String[] args) {
         System.out.println("Started checkers.");
@@ -54,8 +53,8 @@ public class Main {
         }
         System.out.println("y = " + y);
 
-        blackWon.setBounds(23, 81, 642, 640);
-        whiteWon.setBounds(23, 81, 642, 640);
+        blackWon.setBounds(0, 0, 642, 640);
+        whiteWon.setBounds(0, 0, 642, 640);
         frame.add(blackWon);
         frame.add(whiteWon);
         blackWon.setVisible(false);
@@ -262,47 +261,37 @@ public class Main {
         }
     }
 
-    public void select(int x, int y) {
-        plocha[x][y].isSelected = true;
-    }
-
-
-    public void deselect(int x, int y) {
-        plocha[x][y].isSelected = false;
-    }
-
     public static void WhoWon() {
-        boolean isItBlack = true;
-        boolean isItWhite = true;
+        int white = 0;
+        int black = 0;
+
         for (Cell[] cells : plocha) {
             for (Cell cell : cells) {
                 if (!isNull(cell.piece)) {
                     if (cell.piece.isBlack) {
-                        isItWhite = false;
+                        black++;
                     } else {
-                        isItBlack = false;
+                        white++;
                     }
                 }
             }
         }
-        if (isItBlack && isItWhite) {
+        if (white == 0 && black == 0) {
             System.out.println("Vyhráli oba");
         }
 
 
-        if (isItBlack || isItWhite) {
-            System.out.println("Somebody won!");
+        if (white == 0 || black == 0) {
             for (int x = 0; x < plocha.length; x++) {
                 for (int y = 0; y < plocha[x].length; y++) {
                     buttony[x][y].setVisible(false);
                 }
             }
-            if (isItBlack) {
+            if (white == 0) {
                 blackWon.setVisible(true);
             } else {
                 whiteWon.setVisible(true);
             }
-        } else
-            System.out.println("Nobody won!");
+        }
     }
 }
